@@ -1,6 +1,14 @@
 # rprt
 
-A simple bash machine report. Not a fetch program. No dependencies. Works over SSH.
+A no-deps bash machine report following the **Single-End** software philosophy. Works over SSH. Not a fetch program.
+
+RPRT has no settings and no flags. It only reports what you need. For configuration, agents can directly edit the installed script (`~/.local/bin/rprt`, or `/usr/local/bin/rprt` if system-wide), or edit it yourself (see Philosophy section below). 
+
+See [examples.md](examples.md) for more variations and a field catalog.
+
+Inspired by [USGC's machine report](https://github.com/usgraphics/usgc-machine-report).
+
+VM fleet (default):
 
 ```
 ┌────────────────────────────────────────────────────┐
@@ -20,7 +28,31 @@ A simple bash machine report. Not a fetch program. No dependencies. Works over S
 └────────────┴───────────────────────────────────────┘
 ```
 
-Inspired by [USGC's machine report](https://github.com/usgraphics/usgc-machine-report).
+Laptop:
+
+```
+┌────────────────────────────────────────────────────┐
+│                        RPRT                        │
+├────────────┬───────────────────────────────────────┤
+│ HOST       │ atlas                                 │
+│ USER       │ dan                                   │
+│ OS         │ Fedora Linux 44                       │
+│ WIFI       │ home-net                              │
+│ BATTERY    │ ████████████░░░░░░  72%  discharging  │
+│ MEMORY     │ ██████████░░░░░░░░  12/16G  64%       │
+│ DISK ~     │ ██████████████░░░░  340/500G  68%     │
+│ LOAD 1M    │ 0.41                                  │
+│ UPTIME     │ 2d, 4h, 12m                           │
+└────────────┴───────────────────────────────────────┘
+```
+
+## The Single-End Philosophy
+
+**Software that serves a single end;** only what *you* require, and little else. This philosophy is intended for very small programs in a world of token abundance.
+
+- Settings are bloat. Just change the code.
+- Different user, different code. Ends are bespoke.
+- Few lines of code keep the program pliable, cheap in tokens, and gratifying.
 
 ## Install
 
@@ -31,9 +63,10 @@ curl -fsSL https://raw.githubusercontent.com/Comninos/rprt/master/install.sh | b
 System-wide: `… | sudo bash -s -- --system`  
 From clone: `./install.sh` (`--help` for options)
 
-## Config
+## For Agents
 
-Edit the installed script to change the title or fields.
+- Drop unused field code when removing rows.
+- Maintain the basic shape: one file, no config, no flags, few deps.
 
 ## License
 

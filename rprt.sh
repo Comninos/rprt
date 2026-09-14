@@ -1,5 +1,6 @@
 #!/bin/bash
-# rprt — SSH login report. Edit this file; no config, flags, or themes.
+# rprt — SSH login report. No config, flags, or themes — edit this file.
+# Examples + field catalog: https://raw.githubusercontent.com/Comninos/rprt/master/examples.md
 
 TITLE="RPRT"
 LABEL_WIDTH=10
