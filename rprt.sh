@@ -2,6 +2,15 @@
 # rprt — SSH login report. No config, flags, or themes — edit this file.
 # Examples + field catalog: https://raw.githubusercontent.com/Comninos/rprt/master/examples.md
 
+# clip() uses ${#s}; in C/POSIX locale that counts bytes, not characters (breaks █░).
+for _rprt_loc in C.UTF-8 C.utf8 en_US.UTF-8 en_US.utf8; do
+    if LC_ALL="$_rprt_loc" LC_CTYPE="$_rprt_loc" locale >/dev/null 2>&1; then
+        export LC_ALL="$_rprt_loc"
+        break
+    fi
+done
+unset _rprt_loc
+
 TITLE="RPRT"
 LABEL_WIDTH=10
 DATA_WIDTH=37

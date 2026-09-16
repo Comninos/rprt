@@ -109,7 +109,6 @@ ensure_path_session() {
     local dir="$1"
     path_has_dir "$dir" && return 0
     export PATH="${dir}:${PATH}"
-    say "added ${dir} to PATH for this session"
 }
 
 # Idempotent PATH export in a shell rc (separate from the auto-run hook).
@@ -262,7 +261,16 @@ say "verified: $(command -v rprt)"
 say ""
 "$bin_path" || true
 say ""
+if [[ "$SYSTEM" != "1" ]]; then
+    say "to use rprt in this shell:"
+    say "  export PATH=\"${bin_dir}:\$PATH\""
+    say "or open a new interactive shell (PATH was added to your shell rc)"
+fi
 say "edit ${bin_path} to change TITLE / fields"
 if [[ "$HOOK" != "1" ]]; then
     say "run 'rprt' anytime; reinstall with --hook to auto-run on login"
+fi
+if [[ "$SYSTEM" != "1" && "$(id -u)" -eq 0 ]]; then
+    say ""
+    say "tip: on containers/servers, consider: sudo ./install.sh --system -y"
 fi
