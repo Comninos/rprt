@@ -126,8 +126,22 @@ if [ -z "$machine_ip" ] && [ -r /proc/net/fib_trie ]; then
         /proc/net/fib_trie | awk '$1 != "127.0.0.1" { print; exit }')
 fi
 
+# LXC/Docker share the host kernel — no CPU hypervisor flag. Check containers first.
 hv_line="bare metal"
-if [ -r /proc/cpuinfo ] && grep -q '^flags.* hypervisor' /proc/cpuinfo; then
+if [ -f /.dockerenv ]; then
+    hv_line="docker"
+elif [ -f /run/.containerenv ]; then
+    hv_line="podman"
+elif [ -r /run/systemd/container ]; then
+    hv_line=$(tr -d '\n' </run/systemd/container)
+elif [ -r /proc/1/environ ] &&
+    tr '\0' '\n' </proc/1/environ | grep -q '^container='; then
+    hv_line=$(tr '\0' '\n' </proc/1/environ |
+        awk -F= '/^container=/ { print $2; exit }')
+elif [ -r /proc/1/cgroup ] &&
+    grep -Eq '(docker|lxc|kubepods|containerd)' /proc/1/cgroup; then
+    hv_line="container"
+elif [ -r /proc/cpuinfo ] && grep -q '^flags.* hypervisor' /proc/cpuinfo; then
     hv_line="virtual"
 fi
 

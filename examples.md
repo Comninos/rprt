@@ -130,8 +130,7 @@ No packages, no network calls, no sudo, nothing slow.
 - Listening socket count (`/proc/net/tcp`, `/proc/net/tcp6`, udp)
 
 ### Virt & hardware
-- Hypervisor yes/no (`/proc/cpuinfo` flags)
-- Container hints (`/.dockerenv`, `/proc/1/cgroup`, `/run/.containerenv`)
+- Hypervisor / container (`/proc/cpuinfo` flags; `/.dockerenv`, `/run/.containerenv`, `/run/systemd/container`, `/proc/1/environ`, `/proc/1/cgroup`)
 - DMI product / board / vendor / BIOS (`/sys/class/dmi/id/*`)
 - Chassis type (`/sys/class/dmi/id/chassis_type`)
 - CPU model, core count (`/proc/cpuinfo`; `nproc`)
